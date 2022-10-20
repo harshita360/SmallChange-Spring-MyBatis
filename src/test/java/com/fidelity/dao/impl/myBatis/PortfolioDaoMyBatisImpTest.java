@@ -39,7 +39,7 @@ import com.fidelity.models.PortfolioHoldings;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration("classpath:beans.xml")
 @Transactional
-public class PortfolioDaoOracleImpTest {
+public class PortfolioDaoMyBatisImpTest {
 	
 	@Autowired
 	DataSource dataSource;
