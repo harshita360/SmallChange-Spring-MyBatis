@@ -9,6 +9,9 @@ public class PortfolioHoldings {
 	
 	private String insrumentId;
 	private BigInteger quantity;
+	public PortfolioHoldings() {
+		super();
+	}
 	private BigDecimal invetsmentprice;
 	private LocalDateTime lastUpdateAt;
 	private LocalDateTime addedAt;

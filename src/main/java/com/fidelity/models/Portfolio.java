@@ -20,6 +20,12 @@ public class Portfolio {
 	private List<PortfolioHoldings> holdings;
 	
 	
+	
+	
+	public Portfolio() {
+		super();
+	}
+
 	public List<PortfolioHoldings> getHoldings() {
 		return holdings;
 	}
@@ -190,7 +196,7 @@ public class Portfolio {
 			return false;
 		Portfolio other = (Portfolio) obj;
 		return Objects.equals(balance, other.balance) && Objects.equals(clientId, other.clientId)
-				&& Objects.equals(holdings, other.holdings) && Objects.equals(portfolioId, other.portfolioId)
+				&& this.holdings.containsAll(other.holdings) && Objects.equals(portfolioId, other.portfolioId)
 				&& Objects.equals(portfolioName, other.portfolioName)
 				&& Objects.equals(portfolioTypeName, other.portfolioTypeName);
 	}
