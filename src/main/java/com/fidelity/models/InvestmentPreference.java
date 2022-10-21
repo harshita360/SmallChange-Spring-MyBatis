@@ -22,6 +22,9 @@ public class InvestmentPreference {
 		this.lengthOfInvestment = lengthOfInvestment;
 		this.clientId = clientId;
 	}
+	public InvestmentPreference() {
+		super();
+	}
 	public BigInteger getClientId() {
 		return clientId;
 	}
