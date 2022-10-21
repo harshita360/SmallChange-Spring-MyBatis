@@ -45,6 +45,9 @@ public class Client {
 	private String investmentRiskAppetite;
 	
 	
+	public void setClientIdentification(ClientIdentification clientIdentification) {
+		this.clientIdentification = new ClientIdentification[] {clientIdentification};
+	}
 	public BigInteger getClientId() {
 		return clientId;
 	}
@@ -96,10 +99,10 @@ public class Client {
 	public ClientIdentification[] getClientIdentification() {
 		return clientIdentification;
 	}
-	public void setClientIdentification(List<ClientIdentification> clientIdentification) {
-		clientIdentification.toArray(this.clientIdentification);
-		//this.clientIdentification = (ClientIdentification[]) clientIdentification.stream().toArray();
-	}
+//	public void setClientIdentification(List<ClientIdentification> clientIdentification) {
+//		clientIdentification.toArray(this.clientIdentification);
+//		//this.clientIdentification = (ClientIdentification[]) clientIdentification.stream().toArray();
+//	}
 	public String getInvestmentRiskAppetite() {
 		return investmentRiskAppetite;
 	}

@@ -55,6 +55,13 @@ public class PortfolioHoldings {
 		this.addedAt = addedAt;
 	}
 
+	public PortfolioHoldings(PortfolioHoldings hold) {
+		this.insrumentId = hold.insrumentId;
+		this.quantity = hold.quantity;
+		this.invetsmentprice = hold.invetsmentprice;
+		this.lastUpdateAt = hold.lastUpdateAt;
+		this.addedAt = hold.addedAt;
+	}
 	@Override
 	public int hashCode() {
 		return Objects.hash(addedAt, insrumentId, invetsmentprice, lastUpdateAt, quantity);

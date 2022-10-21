@@ -20,7 +20,19 @@ public class Portfolio {
 	private List<PortfolioHoldings> holdings;
 	
 	
-	
+	public Portfolio(Portfolio portfolio) {
+		this.portfolioId=portfolio.portfolioId;
+		this.clientId=portfolio.clientId;
+		this.portfolioTypeName=portfolio.portfolioTypeName;
+		this.balance=portfolio.balance;
+		this.portfolioName=portfolio.portfolioName;
+		this.holdings=new ArrayList<>();
+		if(portfolio.holdings!=null) {
+			for(PortfolioHoldings h:portfolio.holdings) {
+				this.holdings.add(new PortfolioHoldings(h));
+			}
+		}
+	}
 	
 	public Portfolio() {
 		super();

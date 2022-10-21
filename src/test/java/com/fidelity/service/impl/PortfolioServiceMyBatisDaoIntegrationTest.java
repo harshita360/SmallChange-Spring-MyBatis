@@ -22,6 +22,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -48,6 +50,7 @@ public class PortfolioServiceMyBatisDaoIntegrationTest {
 	BigInteger clientId;
 
 	@Autowired
+	@Qualifier("portfolioSericeProxyMyBatis")
 	PortfolioService service;
 
 	JdbcTemplate jdbcTemplate;
@@ -198,6 +201,9 @@ public class PortfolioServiceMyBatisDaoIntegrationTest {
 
 	@Test
 	public void updatePortfolioWithSellAllQuantityOfInstrument() {
+		
+		System.out.println(dao.getPortfolioFromIdAndLoadOfInstrument(portfolio1.getPortfolioId(), "Q345"));
+		
 		// balance =10000
 		Order order = new Order("UUTT789", "S", portfolio1.getClientId(), portfolio1.getPortfolioId(), "Q345", 10,
 				new BigDecimal(100));
@@ -300,7 +306,7 @@ public class PortfolioServiceMyBatisDaoIntegrationTest {
 
 	@Test
 	public void addnewUserExistingPortfolioMustThrowError() {
-		assertThrows(DatabaseException.class, () -> {
+		assertThrows(DuplicateKeyException.class, () -> {
 			service.addNewPortfolio(portfolio1);
 		});
 	}

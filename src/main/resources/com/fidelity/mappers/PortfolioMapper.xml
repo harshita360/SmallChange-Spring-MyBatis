@@ -4,6 +4,8 @@
 
 <mapper namespace="com.fidelity.mappers.PortfolioMapper">
 
+
+
 	<resultMap id="portfolioMap" type="Portfolio" >
 		<id property="portfolioId" column="portfolio_id" />
 		<result property="balance" column="balance" />

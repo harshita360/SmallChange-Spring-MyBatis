@@ -98,6 +98,7 @@ public class PortfolioDaoMyBatisImpl extends PortfolioDao {
 		data.put("instrumentId", instrumentId);
 		data.put("portfolioId", portfolio.getPortfolioId());
 		Portfolio oldPortfolio=mapper.getPortfolioFromPortfolioIdOfInstrument(data);
+		System.out.println("Old"+oldPortfolio);
 		if(oldPortfolio==null) {
 			throw new DatabaseException("Portfolio does not exist");
 		}
@@ -110,7 +111,7 @@ public class PortfolioDaoMyBatisImpl extends PortfolioDao {
 		Map<Object,Object > holdingsDataToUpdate=new HashMap<>();
 		
 		holdingsDataToUpdate.put("portfolioId", portfolio.getPortfolioId());
-		
+		System.out.println(portfolio);
 		// if the new pprtfolio has an has new holding
 		if( oldPortfolio.getHoldings().size()==0 && portfolio.getHoldings().size()==1 ) {
 			// add the instrument holding
@@ -127,10 +128,12 @@ public class PortfolioDaoMyBatisImpl extends PortfolioDao {
 		// if the updated does not have holding
 		else if(oldPortfolio.getHoldings().size()==1 && portfolio.getHoldings().size()==0) {
 			// delete the portfolio holding
+		
 			holdingsDataToUpdate.put("instrumentId", oldPortfolio.getHoldings().get(0).getInsrumentId());
+			System.out.println("Delete "+holdingsDataToUpdate);
 			holdRowsUpdated=mapper.deletePortfolioHolding(holdingsDataToUpdate);
 		}
-		if(holdRowsUpdated!=1) {
+		if(holdRowsUpdated==0) {
 			throw new DatabaseException("Holdings update un succcessful");
 		}
 		return null;

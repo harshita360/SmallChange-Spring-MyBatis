@@ -18,6 +18,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -83,7 +84,7 @@ class ClientDaoMyBatisImplTest {
 		list.add(clientIdentification);
 		ClientIdentification[] arr = list.toArray(new ClientIdentification[0]);
 		Client client1=new Client(BigInteger.valueOf(1463465354),"Adithya","adi@gmail.com","adithya124","600123","USA","123456",LocalDate.now(),BigInteger.valueOf(12),arr,"investment");
-		assertThrows(DatabaseException.class,() -> {
+		assertThrows(DuplicateKeyException.class,() -> {
 			Client insert=dao.registerNewUser(client1);
 		});
 

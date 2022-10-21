@@ -1,6 +1,8 @@
 package com.fidelity.service.impl;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,9 +88,17 @@ public class PortfolioServiceImpl implements PortfolioService {
 			throw new NotFoundException("Portfolio with id"+trade.getPortfolioId()+" not found");
 		}
 		// update the portfolio from its trade
-		portfolio.updateHoldings(trade);
+		//System.out.println("Service"+portfolio);
+		//portfolio.updateHoldings(trade);
+		
+		Portfolio newPortfolio1=new Portfolio(portfolio);
+		newPortfolio1.updateHoldings(trade);
+		//System.out.println(newPortfolio1);
+//		Portfolio newPortfolio1 = new Portfolio(portfolio.getPortfolioId(), portfolio.getClientId(),
+//				portfolio.getPortfolioTypeName(), BigDecimal.valueOf(10997), portfolio.getPortfolioName(),
+//				Arrays.asList());
 		// call dao to update the portfolio
-		Portfolio ret=portfolioDao.updatePortfolioFromIdAndLoadOfInstrument(portfolio, trade.getInstrumentId());
+		Portfolio ret=portfolioDao.updatePortfolioFromIdAndLoadOfInstrument(newPortfolio1, trade.getInstrumentId());
 		return ret;
 	}
 	

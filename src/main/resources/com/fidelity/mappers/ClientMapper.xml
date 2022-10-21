@@ -14,7 +14,7 @@
 		<result property="phone" column="PHONE"/>
 		<result property="dateOfBirth" column="DOB"/>
 		<result property="investmentRiskAppetite" column="RISK_TOLERANCE"/>
-		<collection property="clientIdentification" resultMap="clientIdentificationMap"/>
+		<association property="clientIdentification" resultMap="clientIdentificationMap" />
 	</resultMap>
 	<resultMap id="clientIdentificationMap" type="ClientIdentification">
 		<result property="type" column="ID_TYPE"/>
@@ -23,12 +23,12 @@
 	<select id= "getUserById" parameterType="java.math.BigInteger" resultMap="clientMap">
 		SELECT C.CLIENT_ID, C.NAME, C.EMAIL, C.PASSWORD, C.POSTAL_CODE, C.COUNTRY, C.DOB, C.ID_TYPE, C.ID_VALUE,C.PHONE, I.RISK_TOLERANCE 
 				FROM CLIENT C LEFT JOIN INVESTMENT_PREFERENCE I ON I.CLIENT_ID = C.CLIENT_ID
-				WHERE C.CLIENT_ID = #{CLIENT_ID}
+				WHERE C.CLIENT_ID = #{clientId}
 	</select>
 	<select id="getUserByEmail" parameterType="String" resultMap="clientMap">
 		SELECT C.CLIENT_ID, C.NAME, C.EMAIL, C.PASSWORD, C.POSTAL_CODE, C.COUNTRY, C.DOB, C.ID_TYPE, C.ID_VALUE, C.PHONE, I.RISK_TOLERANCE 
 		FROM CLIENT C LEFT JOIN INVESTMENT_PREFERENCE I ON I.CLIENT_ID = C.CLIENT_ID
-		WHERE C.EMAIL = #{EMAIL}
+		WHERE C.EMAIL = #{email}
 	</select>
 	<insert id="registerNewUser" parameterType="Client">
 		INSERT INTO 
@@ -44,16 +44,16 @@
 		DOB,
 		PHONE) 
 		VALUES(
-		#{CLIENT_ID},
-		#{NAME},
-		#{EMAIL},
-		#{POSTAL_CODE},
-		#{COUNTRY},
-		#{ID_TYPE},
-		#{ID_VALUE},
-		#{PASSWORD},
-		#{DOB},
-		#{PHONE}
+		#{clientId},
+		#{name},
+		#{email},
+		#{postalCode},
+		#{country},
+		#{clientIdentification[0].type},
+		#{clientIdentification[0].value},
+		#{password},
+		#{dateOfBirth},
+		#{phone}
 		)
 	</insert>
 	<delete id="removeUserById" parameterType="java.math.BigInteger" >

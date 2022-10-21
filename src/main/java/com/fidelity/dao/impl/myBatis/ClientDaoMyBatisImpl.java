@@ -28,7 +28,10 @@ public class ClientDaoMyBatisImpl extends ClientDao{
 		if(this.getUserByEmail(client.getEmail())!=null) {
 			throw new ClientException("Already user exist with this email");
 		}
-		return mapper.registerNewUser(client);
+		if(mapper.registerNewUser(client)==1){
+			return client;
+		}
+		return null;
 	}
 
 	@Override

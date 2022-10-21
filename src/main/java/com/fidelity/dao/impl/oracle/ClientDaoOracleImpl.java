@@ -122,7 +122,7 @@ public class ClientDaoOracleImpl extends ClientDao{
 			if(rs.next()) {
 			return new Client(rs.getBigDecimal("CLIENT_ID").toBigInteger(),rs.getString("NAME"),
 					rs.getString("EMAIL"),rs.getString("PASSWORD"),
-					rs.getString("POSTAL_CODE"),rs.getString("COUNTRY"), 
+					rs.getString("POSTAL_CODE"),rs.getString("COUNTRY"), null,
 					rs.getDate("DOB").toLocalDate(), null,
 					new ClientIdentification[] {new ClientIdentification(rs.getString("ID_TYPE"), rs.getString("ID_VALUE"))},
 					rs.getString("RISK_TOLERANCE"));
@@ -154,7 +154,7 @@ public class ClientDaoOracleImpl extends ClientDao{
 //				return this.mapTheResultSetTOClient(rs);
 				return new Client(rs.getBigDecimal("CLIENT_ID").toBigInteger(),rs.getString("NAME"),
 						rs.getString("EMAIL"),rs.getString("PASSWORD"),
-						rs.getString("POSTAL_CODE"),rs.getString("COUNTRY"), 
+						rs.getString("POSTAL_CODE"),rs.getString("COUNTRY"), null,
 						rs.getDate("DOB").toLocalDate(), null,
 						new ClientIdentification[] {new ClientIdentification(rs.getString("ID_TYPE"), rs.getString("ID_VALUE"))},
 						rs.getString("RISK_TOLERANCE"));

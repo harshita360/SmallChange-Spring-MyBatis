@@ -54,7 +54,7 @@ public class PortfolioServiceImplTest {
 		portfolioId=UUID.randomUUID().toString();
 		clientId=BigInteger.valueOf(425345345);
 		Client client=new Client(clientId,"Nikhil V","nikhil@gmail.com","nikhil123",
-				"560061","IN",LocalDate.of(1999, 11, 9),null,new ClientIdentification[] { new ClientIdentification("PAN", "BNHGR76OYA") },"AGGRESSIVE");
+				"560061","IN",null,LocalDate.of(1999, 11, 9),null,new ClientIdentification[] { new ClientIdentification("PAN", "BNHGR76OYA") },"AGGRESSIVE");
 		System.out.println(clientDao.registerNewUser(client));
 		
 	}
