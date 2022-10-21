@@ -2,13 +2,19 @@ package com.fidelity.models;
 
 import java.math.BigInteger;
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.List;
 
 
 public class Client {
 	private BigInteger clientId;
 	private String name;
 	private String email;
-	public Client(BigInteger clientId, String name, String email, String password, String postalCode, String country,
+	private String phone;
+	public Client() {
+		this.clientIdentification = new ClientIdentification[1];
+	}
+	public Client(BigInteger clientId, String name, String email, String password, String postalCode, String country, String phone,
 			LocalDate dateOfBirth, BigInteger token, ClientIdentification[] clientIdentification,
 			String investmentRiskAppetite) {
 		super();
@@ -22,13 +28,20 @@ public class Client {
 		this.token = token;
 		this.clientIdentification = clientIdentification;
 		this.investmentRiskAppetite = investmentRiskAppetite;
+		this.phone = phone;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 	private String password;
 	private String postalCode;
 	private String country;
 	private LocalDate dateOfBirth;
 	private BigInteger token;
-	private ClientIdentification clientIdentification[];
+	private ClientIdentification[] clientIdentification;
 	private String investmentRiskAppetite;
 	
 	
@@ -83,8 +96,9 @@ public class Client {
 	public ClientIdentification[] getClientIdentification() {
 		return clientIdentification;
 	}
-	public void setClientIdentification(ClientIdentification[] clientIdentification) {
-		this.clientIdentification = clientIdentification;
+	public void setClientIdentification(List<ClientIdentification> clientIdentification) {
+		clientIdentification.toArray(this.clientIdentification);
+		//this.clientIdentification = (ClientIdentification[]) clientIdentification.stream().toArray();
 	}
 	public String getInvestmentRiskAppetite() {
 		return investmentRiskAppetite;
