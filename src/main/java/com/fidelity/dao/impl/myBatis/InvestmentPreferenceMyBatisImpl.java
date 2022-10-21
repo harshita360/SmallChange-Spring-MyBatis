@@ -22,6 +22,7 @@ public class InvestmentPreferenceMyBatisImpl extends InvestmentPreferenceDao{
 		return mapper.getExistingPref(clientId);
 	}
 
+	@Transactional
 	@Override
 	public InvestmentPreference updatePref(InvestmentPreference pref) {
 		// TODO Auto-generated method stub
@@ -34,7 +35,7 @@ public class InvestmentPreferenceMyBatisImpl extends InvestmentPreferenceDao{
 		
 		
 	}
-
+    @Transactional
 	@Override
 	public InvestmentPreference addNewInvestmentPreference(InvestmentPreference pref) {
 		// TODO Auto-generated method stub
