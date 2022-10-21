@@ -16,7 +16,7 @@ import com.fidelity.exceptions.DatabaseException;
 import com.fidelity.mappers.PortfolioMapper;
 import com.fidelity.models.Portfolio;
 
-@Component
+@Component("portfolioDaoMyBatis")
 public class PortfolioDaoMyBatisImpl extends PortfolioDao {
 
 	private final Logger logger = LoggerFactory.getLogger(PortfolioDao.class);
