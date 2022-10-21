@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fidelity.mappers.ActivityMapper">
+
+	<resultMap id="activityMap" type="Trade" >
+		<id property="clientId" column="client_id" />
+		<result property="tradeId" column="trade_id" />
+		<result property="direction" column="direction" />
+		<result property="portfolioId" column="portfolio_id" />
+		<result property="instrumentId" column="instrument_id" />
+		<result property="transactionAt" column="transaction_at" />
+		<result property="quantity" column="quantity" />
+		<result property="executionPrice" column="execution_price" />
+		<result property="cashValue" column="cash_value" />
+		<association property="order" resultMap="orderMap" />
+	</resultMap>
+	
+	<resultMap id="orderMap" type="Order">
+	<result property="orderId" column="order_id" />
+	<result property="direction" column="direction" />
+	<result property="clientId" column="client_id" />
+	<result property="portfolioId" column="portfolio_id" />
+	<result property="instrumentId" column="instrument_id" />
+	<result property="quantity" column="quantity" />
+	<result property="targetPrice" column="target_price" />
+	</resultMap>
+	
+	
+	<select id="getUserActivity" resultMap="activityMap">
+	
+		SELECT trade.trade_id,trade.order_id,trade.instrument_id,trade.direction,
+				trade.quantity,trade.execution_price,trade.client_id,trade.portfolio_id,trade.cash_value,
+				trade.transaction_at,ord.target_price
+				from trade_history trade LEFT JOIN order_data ord on trade.client_id=ord.client_id 
+				WHERE trade.client_id=#{clientId}
+	</select>
+	
+	<select id="getPortfolioActivity" resultMap="activityMap">
+	
+		SELECT trade.trade_id,trade.order_id,trade.instrument_id,trade.direction,
+				trade.quantity,trade.execution_price,trade.client_id,trade.portfolio_id,trade.cash_value,
+				trade.transaction_at,ord.target_price
+				from trade_history trade LEFT JOIN order_data ord on trade.client_id=ord.client_id 
+				WHERE trade.portfolio_id=#{portfolioId}
+	</select>
+	
+		<insert id="addActivity" parameterType="Trade">
+		INSERT INTO trade_history (
+			    trade_id,
+			    order_id,
+			    instrument_id,
+			    quantity,
+			    execution_price,
+			    direction,
+			    client_id,
+			    portfolio_id,
+			    cash_value,
+			    transaction_at
+			) VALUES (
+			    #{tradeId},
+			    #{order.orderId},
+			    #{instrumentId},
+			    #{quantity},
+			    #{executionPrice},
+			    #{direction},
+			    #{clientId},
+			    #{portfolioId},
+			    #{cashValue},
+			    #{transactionAt}
+			    )
+	</insert>
+	
+	<insert id="addOrder" parameterType="Order">
+		INSERT INTO order_data (
+			    order_id,
+			    instrument_id,
+			    quantity,
+			    target_price,
+			    direction,
+			    client_id,
+			    portfolio_id
+			) VALUES (
+			    #{orderId},
+			    #{instrumentId},
+			    #{quantity},
+			    #{targetPrice},
+			    #{direction},
+			    #{clientId},
+			    #{portfolioId}
+			)
+	</insert>
+	
+	<delete id="deleteActivityClientId" parameterType="java.math.BigInteger" >
+		DELETE FROM trade_history
+			WHERE
+			    client_id = #{clientId}
+	</delete>
+	
+	<delete id="deleteActivityPortfolioId" parameterType="String" >
+		DELETE FROM trade_history
+			WHERE
+			    portfolio_id = #{portfolioId}
+	</delete>
+	
+	<delete id="deleteOrderClientId" parameterType="java.math.BigInteger" >
+		DELETE FROM order_data
+			WHERE
+			    client_id = #{clientId}
+	</delete>
+	
+	<delete id="deleteOrderPortfolioId" parameterType="String" >
+		DELETE FROM order_data
+			WHERE
+			    portfolio_id = #{portfolioId}
+	</delete>
+	
+	
+	
+</mapper>
