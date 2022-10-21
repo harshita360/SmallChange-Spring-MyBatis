@@ -49,9 +49,9 @@ class ActivityDaoMyBatisImplTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		jdbcTemplate=new JdbcTemplate(dataSource);
-		order1 = new Order("UUUUUU1", "B", new BigInteger("3463464356"), "f8c3de3d-1fea-4d7c-a8b0-29f63c4c3454", "Q3F",
+		order1 = new Order("UUUUUU1", "B", new BigInteger("346346435"), "f8c3de3d-1fea-4d7c-a8b0-29f63c4c3454", "Q3F",
 				10, new BigDecimal("10.65"));
-		trade1 = new Trade("v8c3de3d-1fea-4d7c-a8b0-29f63c4c34bb", "B", order1, new BigInteger("3463464356"),
+		trade1 = new Trade("v8c3de3d-1fea-4d7c-a8b0-29f63c4c34bb", "B", order1, new BigInteger("346346435"),
 				"f8c3de3d-1fea-4d7c-a8b0-29f63c4c3454", "Q3F", LocalDateTime.now(), 10, new BigDecimal("106.5"),
 				new BigDecimal("112.45"));
 	}
@@ -59,7 +59,7 @@ class ActivityDaoMyBatisImplTest {
 
 	@Test
 	void testGetUserActivitySucess() {
-		List<Trade> trades = dao.getUserActivity(new BigInteger("3463464356"));
+		List<Trade> trades = dao.getUserActivity(new BigInteger("346346435"));
 
 		assertEquals(1, trades.size());
 	}
@@ -77,7 +77,7 @@ class ActivityDaoMyBatisImplTest {
 		int oldSize = countRowsInTable(jdbcTemplate, "trade_history");
 		int orderOldSize = countRowsInTable(jdbcTemplate, "order_data");
 
-		Trade newTrade = new Trade("abcdef", "B", order1, new BigInteger("3463464356"),
+		Trade newTrade = new Trade("abcdef", "B", order1, new BigInteger("346346435"),
 				"f8c3de3d-1fea-4d7c-a8b0-29f63c4c3454", "Q3F", LocalDateTime.now(), 10, new BigDecimal("106.5"),
 				new BigDecimal("112.45"));
 
@@ -98,7 +98,7 @@ class ActivityDaoMyBatisImplTest {
 
 	@Test
 	void testDeleteActivityClientId_Success() {
-		BigInteger id = new BigInteger("3463464356");
+		BigInteger id = new BigInteger("346346435");
 		int oldSize = countRowsInTable(jdbcTemplate, "trade_history");
 		int orderOldSize = countRowsInTable(jdbcTemplate, "order_data");
 		assertEquals(1, countRowsInTableWhere(jdbcTemplate, "trade_history", "client_id = " + id));
