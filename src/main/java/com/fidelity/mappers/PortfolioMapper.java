@@ -19,7 +19,4 @@ public interface PortfolioMapper {
 	int deletePortfolioByPortfolioId(String portfolioId);
 	int deletePortfoliosOfClient(BigInteger clientId);
 	int addNewPortfolio(Portfolio portfolio);
-	
-	
-	
 }
