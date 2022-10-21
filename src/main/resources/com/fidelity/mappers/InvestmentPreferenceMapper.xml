@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fidelity.mappers.InvestmentPreferenceMapper">
+
+	<resultMap id="InvestmentPreferenceMap" type="InvestmentPreference">
+	<id property="clientId" column="client_id"/>
+	<result property="incomeCategory" column="income_category"  typeHandler="com.fidelity.enums.IncomeCategoryHandler"/>
+	<result property="lengthOfInvestment" column="length_of_investment" typeHandler="com.fidelity.enums.LengthOfInvestmentHandler"/>
+	 <result property="investmentPurpose" column="investment_purpose" />
+	<result property="riskTolerance" column="risk_tolerance" typeHandler="com.fidelity.enums.RiskToleranceHandler"/>
+	
+	</resultMap>
+	
+	
+	<select id="getExistingPref" parameterType="java.math.BigInteger" resultMap="InvestmentPreferenceMap" >
+	
+		select client_id,income_category,
+		length_of_investment,investment_purpose,
+		risk_tolerance from investment_preference where client_id=#{client_id}
+			
+	</select>
+	
+	<insert id="addNewInvestmentPreference" parameterType="InvestmentPreference">
+    INSERT INTO investment_preference
+			(	client_id,
+				income_category,
+				length_of_investment,
+				investment_purpose,
+				risk_tolerance)
+			VALUES
+			(	
+				#{clientId},
+				#{incomeCategory, typeHandler=com.fidelity.enums.IncomeCategoryHandler},
+				#{lengthOfInvestment, typeHandler=com.fidelity.enums.LengthOfInvestmentHandler},
+				#{investmentPurpose},
+				#{riskTolerance, typeHandler=com.fidelity.enums.RiskToleranceHandler}
+			)
+	</insert>
+	
+	<update id="updatePref" parameterType="InvestmentPreference" >
+		UPDATE INVESTMENT_PREFERENCE SET
+				    client_id= #{clientId},
+				    income_category= #{incomeCategory,typeHandler=com.fidelity.enums.IncomeCategoryHandler},
+				    length_of_investment= #{lengthOfInvestment,typeHandler=com.fidelity.enums.LengthOfInvestmentHandler},
+				    investment_purpose=#{investmentPurpose},
+				    risk_tolerance=#{riskTolerance, typeHandler=com.fidelity.enums.RiskToleranceHandler}
+		WHERE client_id= #{clientId}
+	</update>
+	
+	
+	
+	
+	
+	
+	
+
+	
+</mapper>

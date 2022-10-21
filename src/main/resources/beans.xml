@@ -44,7 +44,7 @@
 	<!-- Define the SqlSessionFactory for MyBatis -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="datasource" />
-		<property name="typeAliasesPackage" value="com.fidelity.models" />
+		<property name="typeAliasesPackage" value="com.fidelity.models, com.fidelity.enums" />
 		<property name="mapperLocations" value="classpath*:com/fidelity/mappers/*.xml" />
 	</bean>
 
