@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.fidelity.dao.PortfolioDao;
@@ -11,7 +12,8 @@ import com.fidelity.exceptions.DatabaseException;
 import com.fidelity.models.Portfolio;
 import com.fidelity.models.PortfolioHoldings;
 
-@Component("portfolioDaoInMemory")
+@Component
+@Profile("{inMemory}")
 public class PortfolioDaoInMemImpl extends PortfolioDao {
 	
 	

@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.fidelity.dao.ClientDao;
@@ -20,6 +21,7 @@ import com.fidelity.models.Client;
 import com.fidelity.models.ClientIdentification;
 
 @Component("clientDaoOracle")
+@Profile("oracle")
 public class ClientDaoOracleImpl extends ClientDao{
 	private DataSource dataSource;
 

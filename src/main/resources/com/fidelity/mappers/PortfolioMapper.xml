@@ -23,7 +23,7 @@
 		<result property="addedAt" column="added_at" />
 	</resultMap>
 	
-	<select id="getPortfolioFromPortfolioId" resultMap="portfolioMap">
+	<select useCache="false" flushCache="true" id="getPortfolioFromPortfolioId" resultMap="portfolioMap">
 	
 		SELECT
 			p.portfolio_id,
@@ -38,10 +38,10 @@
 			ph.last_update_at
 		FROM PORTFOLIO P 
 		LEFT OUTER JOIN portfolio_holding PH ON p.portfolio_id=ph.portfolio_id
-		WHERE p.portfolio_id= #{portfolioId}
+		WHERE p.portfolio_id= #{value}
 	</select>
 	
-	<select id="getPortfolioFromPortfolioIdOfInstrument" parameterType="java.util.Map" resultMap="portfolioMap">
+	<select useCache="false" flushCache="true" id="getPortfolioFromPortfolioIdOfInstrument" parameterType="java.util.Map" resultMap="portfolioMap">
 	
 		SELECT
 			p.portfolio_id,
@@ -59,7 +59,7 @@
 		WHERE p.portfolio_id= #{portfolioId}
 	</select>
 	
-	<select id="getPortfoliosOfClient" resultMap="portfolioMap">
+	<select useCache="false" flushCache="true" id="getPortfoliosOfClient" resultMap="portfolioMap">
 	
 		SELECT
 			p.portfolio_id,

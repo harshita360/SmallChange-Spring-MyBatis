@@ -8,6 +8,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,10 +17,14 @@ import com.fidelity.exceptions.DatabaseException;
 import com.fidelity.mappers.PortfolioMapper;
 import com.fidelity.models.Portfolio;
 
-@Component("portfolioDaoMyBatis")
+@Component()
+@Profile("my-batis")
 public class PortfolioDaoMyBatisImpl extends PortfolioDao {
 
-	private final Logger logger = LoggerFactory.getLogger(PortfolioDao.class);
+	//private final Logger logger = LoggerFactory.getLogger(PortfolioDao.class);
+	
+	@Autowired
+	private  Logger logger;
 
 	@Autowired
 	PortfolioMapper mapper;

@@ -20,20 +20,20 @@ public class Portfolio {
 	private List<PortfolioHoldings> holdings;
 	
 	
-	public Portfolio(Portfolio portfolio) {
-		this.portfolioId=portfolio.portfolioId;
-		this.clientId=portfolio.clientId;
-		this.portfolioTypeName=portfolio.portfolioTypeName;
-		this.balance=portfolio.balance;
-		this.portfolioName=portfolio.portfolioName;
-		this.holdings=new ArrayList<>();
-		if(portfolio.holdings!=null) {
-			for(PortfolioHoldings h:portfolio.holdings) {
-				this.holdings.add(new PortfolioHoldings(h));
-			}
-		}
-	}
-	
+//	public Portfolio(Portfolio portfolio) {
+//		this.portfolioId=portfolio.portfolioId;
+//		this.clientId=portfolio.clientId;
+//		this.portfolioTypeName=portfolio.portfolioTypeName;
+//		this.balance=portfolio.balance;
+//		this.portfolioName=portfolio.portfolioName;
+//		this.holdings=new ArrayList<>();
+//		if(portfolio.holdings!=null) {
+//			for(PortfolioHoldings h:portfolio.holdings) {
+//				this.holdings.add(new PortfolioHoldings(h));
+//			}
+//		}
+//	}
+//	
 	public Portfolio() {
 		super();
 	}
@@ -72,6 +72,9 @@ public class Portfolio {
 		BigInteger i=BigInteger.valueOf(trade.getQuantity());
 		// we will compare the quantity in trade to the quantity hold
 		if(hold.getQuantity().compareTo(i)>=0) {
+			
+			// adding the last update at
+			hold.setLastUpdateAt(LocalDateTime.now());
 			
 			// reduce the holdings quantity
 			hold.setQuantity(hold.getQuantity().subtract(i));
@@ -113,7 +116,8 @@ public class Portfolio {
 			
 			// updating the balance and the holdings
 			this.balance=this.balance.subtract(trade.getCashValue());
-			//System.out.println("Portfolio balance"+this.balance+" trade"+trade.getCashValue());
+			
+			// update the holding at
 			hold.setLastUpdateAt(LocalDateTime.now());
 			//System.out.println("Updated buy "+hold);
 			
@@ -207,6 +211,14 @@ public class Portfolio {
 		if (getClass() != obj.getClass())
 			return false;
 		Portfolio other = (Portfolio) obj;
+		
+		if(this.holdings==null && other.holdings==null) {
+			return Objects.equals(balance, other.balance) && Objects.equals(clientId, other.clientId)
+					&& Objects.equals(portfolioId, other.portfolioId)
+					&& Objects.equals(portfolioName, other.portfolioName)
+					&& Objects.equals(portfolioTypeName, other.portfolioTypeName);
+		}
+		
 		return Objects.equals(balance, other.balance) && Objects.equals(clientId, other.clientId)
 				&& this.holdings.containsAll(other.holdings) && Objects.equals(portfolioId, other.portfolioId)
 				&& Objects.equals(portfolioName, other.portfolioName)

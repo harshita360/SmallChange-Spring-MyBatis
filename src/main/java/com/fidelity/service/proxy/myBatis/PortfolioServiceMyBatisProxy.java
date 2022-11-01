@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,7 +13,8 @@ import com.fidelity.models.Portfolio;
 import com.fidelity.models.Trade;
 import com.fidelity.service.PortfolioService;
 
-@Service("portfolioSericeProxyMyBatis")
+@Profile("my-batis")
+@Service("proxyPortfolioService")
 public class PortfolioServiceMyBatisProxy implements PortfolioService {
 	
 	private PortfolioService service;

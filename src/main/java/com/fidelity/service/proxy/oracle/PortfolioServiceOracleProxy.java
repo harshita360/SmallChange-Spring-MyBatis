@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.fidelity.exceptions.DatabaseException;
@@ -14,6 +15,7 @@ import com.fidelity.models.Trade;
 import com.fidelity.service.PortfolioService;
 
 @Service("portfolioSericeProxyOracle")
+@Profile("oracle")
 public class PortfolioServiceOracleProxy implements PortfolioService {
 	
 	private TransactionManager transManager;

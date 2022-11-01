@@ -16,6 +16,7 @@ import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.fidelity.dao.PortfolioDao;
@@ -23,7 +24,8 @@ import com.fidelity.exceptions.DatabaseException;
 import com.fidelity.models.Portfolio;
 import com.fidelity.models.PortfolioHoldings;
 
-@Component("portfolioDaoOracle")
+@Component()
+@Profile("oracle")
 public class PortfolioDaoOracleImp extends PortfolioDao {
 
 	private DataSource dataSource;

@@ -5,6 +5,11 @@ import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+
 public class PortfolioHoldings {
 	
 	private String insrumentId;
@@ -13,7 +18,13 @@ public class PortfolioHoldings {
 		super();
 	}
 	private BigDecimal invetsmentprice;
+	
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	private LocalDateTime lastUpdateAt;
+	
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	private LocalDateTime addedAt;
 	public String getInsrumentId() {
 		return insrumentId;

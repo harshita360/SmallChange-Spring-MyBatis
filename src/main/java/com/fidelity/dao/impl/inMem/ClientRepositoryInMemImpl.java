@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.fidelity.dao.ClientDao;
@@ -12,6 +13,7 @@ import com.fidelity.exceptions.ClientException;
 import com.fidelity.models.Client;
 
 @Component("clientDaoInMem")
+@Profile("{inMemory}")
 public class ClientRepositoryInMemImpl extends ClientDao {
 
 	private List<Client> clients = new ArrayList<>();

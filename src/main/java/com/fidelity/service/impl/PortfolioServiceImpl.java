@@ -2,14 +2,15 @@ package com.fidelity.service.impl;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fidelity.dao.ClientDao;
 import com.fidelity.dao.PortfolioDao;
+import com.fidelity.exceptions.NotEligibleException;
 import com.fidelity.exceptions.NotFoundException;
 import com.fidelity.models.Portfolio;
 import com.fidelity.models.Trade;
@@ -55,11 +56,36 @@ public class PortfolioServiceImpl implements PortfolioService {
 	}
 	@Override
 	public Portfolio addNewPortfolio(Portfolio portfolio) {
+		
+		// checking if the data sent is valid
+		// checking for the balance
+		if(portfolio.getBalance()==null || portfolio.getBalance().compareTo(BigDecimal.ZERO)<=0) {
+			throw new NotEligibleException("balance cannot be less than zero");
+		}
+		// checking for the client id
+		if(portfolio.getClientId()==null) {
+			throw new NotEligibleException("Passed client id to create portfolio");
+		}
+		// checking for the valid
+		if(portfolio.getHoldings()!=null && !portfolio.getHoldings().isEmpty()) {
+			throw new NotEligibleException("Initial Holdings must be zero");
+		}
+		//
+		if(portfolio.getPortfolioName()==null || portfolio.getPortfolioName().isEmpty()) {
+			throw new NotEligibleException("Portfolio Name cannot be null or emoty");
+		}
+		
+		//
+		if(portfolio.getPortfolioTypeName()==null || portfolio.getPortfolioTypeName().isEmpty()) {
+			throw new NotEligibleException("Portfolio type Name cannot be null or emoty");
+		}
+		
 		// check to see if the client exists
 		if(clientdao.getUserById(portfolio.getClientId())==null) {
 			// if not exists, throw exception
 			throw new NotFoundException("Client with id"+portfolio.getClientId()+" not found");
 		}
+		portfolio.setPortfolioId(UUID.randomUUID().toString());
 		return portfolioDao.addNewPortfolio(portfolio);
 	}
 	
@@ -87,18 +113,10 @@ public class PortfolioServiceImpl implements PortfolioService {
 		if(portfolio==null) {
 			throw new NotFoundException("Portfolio with id"+trade.getPortfolioId()+" not found");
 		}
-		// update the portfolio from its trade
-		//System.out.println("Service"+portfolio);
-		//portfolio.updateHoldings(trade);
-		
-		Portfolio newPortfolio1=new Portfolio(portfolio);
-		newPortfolio1.updateHoldings(trade);
-		//System.out.println(newPortfolio1);
-//		Portfolio newPortfolio1 = new Portfolio(portfolio.getPortfolioId(), portfolio.getClientId(),
-//				portfolio.getPortfolioTypeName(), BigDecimal.valueOf(10997), portfolio.getPortfolioName(),
-//				Arrays.asList());
-		// call dao to update the portfolio
-		Portfolio ret=portfolioDao.updatePortfolioFromIdAndLoadOfInstrument(newPortfolio1, trade.getInstrumentId());
+		// checking the previous count
+		// update the portfolio
+		portfolio.updateHoldings(trade);
+		Portfolio ret=portfolioDao.updatePortfolioFromIdAndLoadOfInstrument(portfolio, trade.getInstrumentId());
 		return ret;
 	}
 	
