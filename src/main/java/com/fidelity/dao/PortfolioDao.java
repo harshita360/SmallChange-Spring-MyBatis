@@ -3,8 +3,6 @@ package com.fidelity.dao;
 import java.math.BigInteger;
 import java.util.List;
 
-import com.fidelity.enums.Implementations;
-import com.fidelity.enums.ResourceType;
 import com.fidelity.models.Portfolio;
 
 public abstract class PortfolioDao {

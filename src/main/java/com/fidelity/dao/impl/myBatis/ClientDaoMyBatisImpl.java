@@ -39,8 +39,9 @@ public class ClientDaoMyBatisImpl extends ClientDao{
 	@Override
 	@Transactional
 	public Client authenticateUser(String email, String password) {
-		// TODO Auto-generated method stub
+
 		Client client = mapper.getUserByEmail(email);
+
 		if(client.getPassword().equals(password)) {
 			return client;
 		}

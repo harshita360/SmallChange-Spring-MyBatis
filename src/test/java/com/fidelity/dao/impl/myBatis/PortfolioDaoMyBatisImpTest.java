@@ -26,6 +26,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fidelity.dao.PortfolioDao;
@@ -35,6 +36,9 @@ import com.fidelity.models.PortfolioHoldings;
 
 @DisplayName("Portfolio dao My Batis Implementation")
 @SpringBootTest
+@Sql(scripts={"classpath:schema.sql", "classpath:data.sql"},executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)  
+@Sql(scripts={"classpath:drop.sql",},executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)  
+
 @Transactional
 public class PortfolioDaoMyBatisImpTest {
 	
