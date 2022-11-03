@@ -45,6 +45,7 @@ public class ClientServiceImpl extends ClientService{
 	@Override
 	public Client registerNewUser(Client client) {
 		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -53,45 +54,17 @@ public class ClientServiceImpl extends ClientService{
 		
 		Client client=dao.authenticateUser(email, password);
 		
-		HttpHeaders headers=new HttpHeaders();
-		headers.add("Cotent-Type", "application/json");
-		headers.add("Accept", "application/json");
+		FmtsClientModel respData=this.registerWithFmtsServer(client);
 		
-		
-		FmtsClientModel requestData=new FmtsClientModel();
-		requestData.setClientId(client.getClientId());
-		requestData.setEmail(client.getEmail());
-		
-		
-		HttpEntity<FmtsClientModel> requestEntity=new HttpEntity<>(requestData,headers);
-		
-		
-		logger.debug("Going to issue request");
-		ResponseEntity<String> response= restTemplate.postForEntity("http://localhost:3000/fmts/client/", requestEntity ,String.class);
-		logger.debug(response.toString());
-
-		if(response.getStatusCode().is2xxSuccessful() && response.getBody()!=null) {
-			
-			FmtsClientModel respData;
-			try {
-				respData = objectMapper.readValue(response.getBody(), FmtsClientModel.class);
-			} catch (JsonProcessingException e) {
-				logger.error("Json Decoder error from fmts server",e);
-				throw new RuntimeException("JSON Error");
-			}
-			
-			logger.debug("In the response uccesful");
-			TokenDto token=new TokenDto();
-			token.setClientName(client.getName());
-			Map<String,Object> claims=new HashMap<>(); 
-			claims.put("ROLE", "CLIENT");
-			claims.put("fmtsToken", respData.getToken());
-			token.setToken(jwtService.createToken(claims, client.getClientId()));
-			return token;
-		}else if(response.getStatusCode().equals(HttpStatus.NOT_ACCEPTABLE)) {
-			throw new RuntimeException("Invalid authentication data");
-		}
-		return null;
+		logger.debug("In the response uccesful");
+		TokenDto token=new TokenDto();
+		token.setClientName(client.getName());
+		Map<String,Object> claims=new HashMap<>(); 
+		claims.put("ROLE", "CLIENT");
+		claims.put("fmtsToken", respData.getToken());
+		token.setToken(jwtService.createToken(claims, client.getClientId()));
+		token.setClientId(respData.getClientId());
+		return token;
 		
 	}
 
@@ -129,6 +102,40 @@ public class ClientServiceImpl extends ClientService{
 	public Client getUserByEmail(String email) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	private FmtsClientModel registerWithFmtsServer(Client client) {
+		
+		HttpHeaders headers=new HttpHeaders();
+		headers.add("Cotent-Type", "application/json");
+		headers.add("Accept", "application/json");
+		
+		FmtsClientModel requestData=new FmtsClientModel();
+		requestData.setClientId(client.getClientId());
+		requestData.setEmail(client.getEmail());
+		
+		
+		HttpEntity<FmtsClientModel> requestEntity=new HttpEntity<>(requestData,headers);
+		
+		
+		logger.debug("Going to issue request");
+		ResponseEntity<String> response= restTemplate.postForEntity("http://localhost:3000/fmts/client/", requestEntity ,String.class);
+		logger.debug(response.toString());
+
+		if(response.getStatusCode().is2xxSuccessful() && response.getBody()!=null) {
+			
+			FmtsClientModel respData;
+			try {
+				respData = objectMapper.readValue(response.getBody(), FmtsClientModel.class);
+			} catch (JsonProcessingException e) {
+				logger.error("Json Decoder error from fmts server",e);
+				throw new RuntimeException("JSON Error");
+			}
+			
+			return respData;
+		}else {
+			throw new RuntimeException("Invalid authentication data");
+		}
 	}
 
 }
