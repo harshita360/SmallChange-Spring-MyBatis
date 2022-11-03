@@ -4,6 +4,6 @@ import com.fidelity.models.InvestmentPreference;
 
 public abstract class InvestmentPreferenceService {
 
-	public abstract InvestmentPreference getInvestmentPref();
-	public abstract InvestmentPreference updateInvestmentPref(InvestmentPreference i);
+	public abstract InvestmentPreference getInvestmentPref(String token);
+	public abstract InvestmentPreference updateInvestmentPref(InvestmentPreference i,String token);
 }
