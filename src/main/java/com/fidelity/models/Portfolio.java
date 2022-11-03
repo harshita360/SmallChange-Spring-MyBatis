@@ -50,18 +50,18 @@ public class Portfolio {
 		return null;
 	}
 	
-	public boolean checkBuyEligibility(Order order) {
-		if(this.balance.compareTo(order.getTargetPrice().multiply(new BigDecimal(1.05).multiply(new BigDecimal(order.getQuantity()))))<0) {
+	public boolean checkBuyEligibility(BigDecimal targetPrice,Integer quantity) {
+		if(this.balance.compareTo(targetPrice.multiply(new BigDecimal(1.05).multiply(new BigDecimal(quantity))))<0) {
 			return false;
 		}
 		return true;
 		
 	}
 	
-	public boolean checkSellEligibility(Order order) {
-		PortfolioHoldings hold=this.getTheHoldingsByInstrumnentId(order.getInstrumentId());
+	public boolean checkSellEligibility(String instrumentId,Integer quantity) {
+		PortfolioHoldings hold=this.getTheHoldingsByInstrumnentId(instrumentId);
 		if(hold!=null) {
-			if(hold.getQuantity().compareTo(BigInteger.valueOf(order.getQuantity()))>=0) {
+			if(hold.getQuantity().compareTo(BigInteger.valueOf(quantity))>=0) {
 				return true;
 			}
 		}
