@@ -16,6 +16,11 @@ public class AuthenticationData {
 	public void setPassword(String pasword) {
 		this.password = pasword;
 	}
+	public AuthenticationData(String email, String password) {
+		super();
+		this.email = email;
+		this.password = password;
+	}
 	
 	
 
