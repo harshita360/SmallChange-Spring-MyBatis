@@ -15,7 +15,7 @@ import com.fidelity.models.Portfolio;
 import com.fidelity.models.Trade;
 import com.fidelity.service.ActivityService;
 
-@Service
+@Service("mainActivityService")
 public class ActivityServiceImpl implements ActivityService {
 	
 	private ClientDao clientDao;
@@ -35,7 +35,6 @@ public class ActivityServiceImpl implements ActivityService {
 		if(clientDao.getUserById(trade.getClientId())==null) {
 			throw new NotFoundException(clientErrorMsg(trade.getClientId().toString()));
 		}
-		activityDao.addOrder(trade.getOrder());
 		activityDao.addActivity(trade);
 		
 	}

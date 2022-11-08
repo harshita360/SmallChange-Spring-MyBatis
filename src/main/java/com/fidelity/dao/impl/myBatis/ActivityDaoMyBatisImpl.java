@@ -24,7 +24,6 @@ public class ActivityDaoMyBatisImpl extends ActivityDao {
 	@Override
 	@Transactional
 	public void addActivity(Trade trade) {
-		mapper.addOrder(trade.getOrder());
 		int status=mapper.addActivity(trade);
 		if(status==0) {
 			throw new DatabaseException("Failed to insert activity!!!");
@@ -61,7 +60,6 @@ public class ActivityDaoMyBatisImpl extends ActivityDao {
 		if(status==0) {
 			throw new DatabaseException("Failed to delete activity!!!");
 		}
-		mapper.deleteOrderClientId(clientId);
 		
 	}
 
@@ -72,7 +70,6 @@ public class ActivityDaoMyBatisImpl extends ActivityDao {
 		if(status==0) {
 			throw new DatabaseException("Failed to delete activity!!!");
 		}
-		mapper.deleteOrderPortfolioId(portfolioId);
 		
 	}
 
