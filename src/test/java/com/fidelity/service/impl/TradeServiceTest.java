@@ -1,5 +1,8 @@
 package com.fidelity.service.impl;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
@@ -31,8 +34,11 @@ String token="Bearer eyJhbGciOiJIUzI1NiJ9.eyJST0xFIjoiQ0xJRU5UIiwic3ViIjoiMTcyOD
 
 
 @Test
-void testExecuteOrderSuccess() {
-	//ResponseEntity<Trade> responseStatus=tradeService.executeOrder(order, token);
+void testExecuteOrderSuccess() throws Exception {
+	Trade response=tradeService.executeOrder(order, token);
+	assertNotNull(response);
+	
+	
 }
 	
 }
