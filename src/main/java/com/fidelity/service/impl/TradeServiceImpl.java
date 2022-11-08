@@ -89,7 +89,14 @@ public class TradeServiceImpl extends TradeService{
 		t.setPortfolioId(order.getPortfolioId());
 		t.setTransactionAt(LocalDateTime.now());
 		t.getOrder().setPortfolioId(order.getPortfolioId());
-		activityService.addActivity(t);
+		try
+		{
+			activityService.addActivity(t);
+		}
+		catch(Exception e)
+		{
+			throw new Exception(e);
+		}
 		return t;
 		
 	}
