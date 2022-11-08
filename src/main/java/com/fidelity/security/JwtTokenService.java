@@ -45,7 +45,7 @@ public class JwtTokenService {
 	
 	public String getClaimsFmtsToken(String token)  {
 		Claims claims=extractAllClaims(token);
-		return  claims.get("fmtsToken").toString();
+		return claims.get("fmtsToken").toString();
 	}
 	
 	public Claims getClaim(String token)   {

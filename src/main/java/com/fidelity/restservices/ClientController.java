@@ -3,6 +3,7 @@ package com.fidelity.restservices;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.fidelity.exceptions.ClientException;
+import com.fidelity.exceptions.FmtsException;
 import com.fidelity.security.JwtTokenService;
 import com.fidelity.service.ClientService;
 import com.fidelity.utils.AuthenticationData;
 import com.fidelity.utils.TokenDto;
+
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 
 @CrossOrigin("*")
 @RestController
@@ -32,14 +36,22 @@ public class ClientController {
 	@Autowired
 	JwtTokenService tokenService;
 	
+	@Autowired
+	Logger logger;
+	
+	@CircuitBreaker(name = "fmts-circuit-breaker")
 	@PostMapping("/login")
 	public ResponseEntity<TokenDto> authenticateUser(
 			@RequestBody AuthenticationData data){
+		logger.debug("IN Client Login");
 		try {
 			TokenDto responseData=service.authenticateUser(data.getEmail(), data.getPassword());
 			return ResponseEntity.ok(responseData);
 		}catch(ClientException e) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid user name or password",e);
+		
+		}catch(FmtsException e) {
+			throw new FmtsException(e.getMessage());
 		}catch(Exception e) {
 			e.printStackTrace();
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error",e);

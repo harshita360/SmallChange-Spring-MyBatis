@@ -17,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fidelity.dao.ClientDao;
+import com.fidelity.exceptions.FmtsException;
 import com.fidelity.models.Client;
 import com.fidelity.security.JwtTokenService;
 import com.fidelity.service.ClientService;
@@ -117,11 +118,17 @@ public class ClientServiceImpl extends ClientService{
 		
 		HttpEntity<FmtsClientModel> requestEntity=new HttpEntity<>(requestData,headers);
 		
+		ResponseEntity<String> response=null;
+		try{
+			logger.debug("Going to issue request");
 		
-		logger.debug("Going to issue request");
-		ResponseEntity<String> response= restTemplate.postForEntity("http://localhost:3000/fmts/client/", requestEntity ,String.class);
-		logger.debug(response.toString());
+			response= restTemplate.postForEntity("http://localhost:3000/fmts/client/", requestEntity ,String.class);
+			
+			logger.debug(response.toString());
 
+		}catch(Exception e) {
+			throw new FmtsException("Fmts Server Error");
+		}
 		if(response.getStatusCode().is2xxSuccessful() && response.getBody()!=null) {
 			
 			FmtsClientModel respData;
@@ -133,7 +140,7 @@ public class ClientServiceImpl extends ClientService{
 			}
 			
 			return respData;
-		}else {
+		}else  {
 			throw new RuntimeException("Invalid authentication data");
 		}
 	}
