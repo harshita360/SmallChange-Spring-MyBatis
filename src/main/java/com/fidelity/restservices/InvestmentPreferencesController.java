@@ -61,4 +61,22 @@ public class InvestmentPreferencesController {
 		  throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"backend err",e); 
 	   }
 	}
+	
+	@PostMapping("/addpref")
+	public ResponseEntity<InvestmentPreference> addInvestmentPreference(@RequestBody InvestmentPreference i)
+	{
+	   try
+	   {
+		   InvestmentPreference ip=service.insertInvestmentPref(i);
+		   if(ip==null)
+		   {
+			   return ResponseEntity.noContent().build();
+		   }
+		   return ResponseEntity.ok(ip);
+	   }
+	   catch(Exception e)
+	   {
+		  throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"backend err",e); 
+	   }
+	}
 }

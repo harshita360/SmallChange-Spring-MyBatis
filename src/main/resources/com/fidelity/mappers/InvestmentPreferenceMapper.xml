@@ -14,7 +14,7 @@
 	</resultMap>
 	
 	
-	<select id="getExistingPref" parameterType="java.math.BigInteger" resultMap="InvestmentPreferenceMap" >
+	<select useCache="false" flushCache="true" id="getExistingPref" parameterType="java.math.BigInteger" resultMap="InvestmentPreferenceMap" >
 	
 		select client_id,income_category,
 		length_of_investment,investment_purpose,

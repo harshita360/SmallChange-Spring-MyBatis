@@ -22,7 +22,7 @@ public class InvestmentPreferenceServiceImpl extends InvestmentPreferenceService
 	
 
 	@Override
-	public InvestmentPreference updateInvestmentPref(InvestmentPreference i,String token) {
+	public InvestmentPreference updateInvestmentPref(InvestmentPreference i) throws Exception {
 		// TODO Auto-generated method stub
 		InvestmentPreference ip=null;
 		try
@@ -32,6 +32,7 @@ public class InvestmentPreferenceServiceImpl extends InvestmentPreferenceService
 		catch(Exception e)
 		{
 			//raise Exception
+			throw new Exception("error",e);
 		}
 		return ip;
 	}
@@ -41,9 +42,9 @@ public class InvestmentPreferenceServiceImpl extends InvestmentPreferenceService
 
 
 	@Override
-	public InvestmentPreference getInvestmentPref(String token) {
+	public InvestmentPreference getInvestmentPref(String token) throws Exception {
 		// TODO Auto-generated method stub
-InvestmentPreference i=null;
+        InvestmentPreference i=null;
 		
 		try
 		{
@@ -53,8 +54,32 @@ InvestmentPreference i=null;
 		catch(Exception e)
 		{
 			//rais exception
+			throw new Exception("error",e);
 		}
 		return i;
+	}
+
+
+
+
+
+	@Override
+	public InvestmentPreference insertInvestmentPref(InvestmentPreference i) throws Exception {
+		// TODO Auto-generated method stub
+		InvestmentPreference ip=null;
+		try
+		{
+			ip=ifdao.addNewInvestmentPreference(i);
+		}
+		catch(Exception e)
+		{
+			//raise Exception
+			throw new Exception("error",e);
+		}
+		return ip;
+		
+		
+		
 	}
 
 }

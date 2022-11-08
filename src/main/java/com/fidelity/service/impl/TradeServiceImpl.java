@@ -84,6 +84,10 @@ public class TradeServiceImpl extends TradeService{
 			throw new IneligibleOrderException("Not valid order");
 		}
 		//call activity service to add to trade activity table;
+		t.getOrder().setOrderId(order.getOrderId());
+		t.setPortfolioId(order.getPortfolioId());
+		t.setTransactionAt(LocalDateTime.now());
+		t.getOrder().setPortfolioId(order.getPortfolioId());
 		return t;
 		
 	}
@@ -117,6 +121,7 @@ public class TradeServiceImpl extends TradeService{
 				throw new RuntimeException("JSON Error");
 			
 			}
+			
 			return t;
 		}else {
 			throw new RuntimeException("Invalid authentication data");
