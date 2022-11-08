@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fidelity.dao.ClientDao;
@@ -15,7 +16,6 @@ import com.fidelity.mappers.ClientMapper;
 import com.fidelity.models.Client;
 
 @Component
-@Profile("my-batis")
 public class ClientDaoMyBatisImpl extends ClientDao{
 	
 	private final Logger logger = LoggerFactory.getLogger(ClientDao.class);

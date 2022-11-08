@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,7 @@ import com.fidelity.models.Order;
 import com.fidelity.models.Trade;
 
 @Component
+@Profile("my-batis")
 public class ActivityDaoMyBatisImpl extends ActivityDao {
 	
 	@Autowired

@@ -16,9 +16,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,8 +29,10 @@ import com.fidelity.exceptions.DatabaseException;
 import com.fidelity.models.Order;
 import com.fidelity.models.Trade;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration("classpath:beans.xml")
+@SpringBootTest
+@Sql(scripts={"classpath:schema.sql", "classpath:data.sql"},executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)  
+@Sql(scripts={"classpath:drop.sql",},executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+
 @Transactional
 class ActivityDaoMyBatisImplTest {
 	

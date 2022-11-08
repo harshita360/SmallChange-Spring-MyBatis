@@ -12,7 +12,9 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,13 +23,10 @@ import com.fidelity.models.Portfolio;
 import com.fidelity.models.PortfolioHoldings;
 
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration("classpath:beans.xml")
-@Transactional
+@SpringBootTest
 class SmallchangeSpringApplicationTests {
 	
-	@Autowired
-	PortfolioMapper pMappr;
+	//PortfolioMapper pMappr;
 
 	@Test
 	void contextLoads() {
