@@ -24,6 +24,7 @@ import com.fidelity.models.Portfolio;
 import com.fidelity.models.Trade;
 import com.fidelity.security.JwtTokenService;
 import com.fidelity.models.Client;
+import com.fidelity.service.ActivityService;
 import com.fidelity.service.ClientService;
 import com.fidelity.service.PortfolioService;
 import com.fidelity.service.TradeService;
@@ -52,8 +53,8 @@ public class TradeServiceImpl extends TradeService{
 	private ObjectMapper objectMapper;
 	
 	
-	
-	
+	@Autowired
+	private ActivityService activityService;
 
 
 	@Override
@@ -88,6 +89,7 @@ public class TradeServiceImpl extends TradeService{
 		t.setPortfolioId(order.getPortfolioId());
 		t.setTransactionAt(LocalDateTime.now());
 		t.getOrder().setPortfolioId(order.getPortfolioId());
+		activityService.addActivity(t);
 		return t;
 		
 	}
