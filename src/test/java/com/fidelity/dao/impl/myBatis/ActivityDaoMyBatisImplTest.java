@@ -50,7 +50,7 @@ class ActivityDaoMyBatisImplTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		jdbcTemplate = new JdbcTemplate(dataSource);
-		clientId = new BigInteger("346346435");
+		clientId = new BigInteger("970531476");
 		portfolioId = "f8c3de3d-1fea-4d7c-a8b0-29f63c4c3454";
 		order1 = new Order("a8c3de3d-1fea-4d7c-a8b0-29f63c4c3455", "B", clientId, portfolioId, "Q3F", 10,
 				new BigDecimal("10.65"));
