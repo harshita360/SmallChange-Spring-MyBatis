@@ -1,35 +1,28 @@
 package com.fidelity.service.impl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.jdbc.JdbcTestUtils.countRowsInTable;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fidelity.exceptions.IneligibleOrderException;
-import com.fidelity.models.Client;
 import com.fidelity.models.Order;
 import com.fidelity.models.Trade;
 import com.fidelity.service.ClientService;
 import com.fidelity.service.TradeService;
-import com.fidelity.utils.AuthenticationData;
-import com.fidelity.utils.TokenDto;
 
 @SpringBootTest
 @Sql(scripts={"classpath:schema.sql", "classpath:data.sql"},executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)  
