@@ -55,12 +55,16 @@ public class TradeServiceImpl extends TradeService{
 	
 	@Autowired
 	private ActivityService activityService;
+	
+
+	
 
 
 	@Override
 	public Trade executeOrder(Order order,String token) throws Exception {
 		// TODO Auto-generated method stub
 		Trade t=null;
+		Order o=activityService.addOrder(order);
 		OrderDto orderdto=new OrderDto();
 		orderdto.setClientId(order.getClientId());
 		orderdto.setDirection(order.getDirection());
@@ -85,18 +89,20 @@ public class TradeServiceImpl extends TradeService{
 			throw new IneligibleOrderException("Not valid order");
 		}
 		//call activity service to add to trade activity table;
-		t.getOrder().setOrderId(order.getOrderId());
+		t.getOrder().setOrderId(o.getOrderId());
 		t.setPortfolioId(order.getPortfolioId());
 		t.setTransactionAt(LocalDateTime.now());
 		t.getOrder().setPortfolioId(order.getPortfolioId());
-		try
-		{
-			activityService.addActivity(t);
-		}
-		catch(Exception e)
-		{
-			throw new Exception(e);
-		}
+//		try
+//		{
+		activityService.addActivity(t);
+		portfolioService.updatePortfolioFromTrade(t);
+//		}
+//		catch(Exception e)
+//		{
+//			
+//			throw new Exception(e);
+//		}
 		return t;
 		
 	}

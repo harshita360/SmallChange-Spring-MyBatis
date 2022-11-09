@@ -8,7 +8,7 @@ import com.fidelity.models.Trade;
 
 public interface ActivityService {
 	public abstract void addActivity(Trade trade);
-	public abstract void addOrder(Order order);
+	public abstract Order addOrder(Order order);
 	public abstract List<Trade>  getUserActivity(BigInteger userId);
 	public abstract List<Trade>  getPortfolioActivity(String portfolioId);
 	public abstract void deleteActivityClientId(BigInteger clientId);

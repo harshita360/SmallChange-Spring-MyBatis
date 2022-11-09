@@ -131,8 +131,8 @@ public class Portfolio {
 	public void updateHoldings(Trade trade)  {
 		//List<PortfolioHoldings> heldFilter= this.holdings.stream().filter( h -> h.getInsrumentId().equals(trade.getInstrumentId())).toList();
 		 PortfolioHoldings hold=this.getTheHoldingsByInstrumnentId(trade.getInstrumentId());
-		 //System.out.println("Goiung to updated main "+hold + trade);
-		if(hold==null && trade.getDirection()=="B") {
+		 System.out.println("Goiung to updated main "+hold + trade);
+		if(hold==null && trade.getDirection().equals("B")) {
 			this.updateBuyInstrumentData(trade,null);
 		}else if(hold!=null) {
 			if(trade.getDirection().equals("S")) {

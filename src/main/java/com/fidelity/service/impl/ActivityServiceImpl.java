@@ -2,6 +2,7 @@ package com.fidelity.service.impl;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,17 +36,21 @@ public class ActivityServiceImpl implements ActivityService {
 		if(clientDao.getUserById(trade.getClientId())==null) {
 			throw new NotFoundException(clientErrorMsg(trade.getClientId().toString()));
 		}
-		activityDao.addOrder(trade.getOrder());
+		//activityDao.addOrder(trade.getOrder());
 		activityDao.addActivity(trade);
 		
 	}
 	
 	@Override
-	public void addOrder(Order order) {
+	public Order addOrder(Order order) {
+		order.setOrderId(UUID.randomUUID().toString());
 		if(clientDao.getUserById(order.getClientId())==null) {
 			throw new NotFoundException(clientErrorMsg(order.getClientId().toString()));
 		}
-		activityDao.addOrder(order);
+		
+		System.out.println(order.getOrderId());
+        activityDao.addOrder(order);
+		return order;
 		
 	}
 

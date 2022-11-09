@@ -24,7 +24,7 @@ public class ActivityDaoMyBatisImpl extends ActivityDao {
 	@Override
 	@Transactional
 	public void addActivity(Trade trade) {
-		mapper.addOrder(trade.getOrder());
+		//mapper.addOrder(trade.getOrder());
 		int status=mapper.addActivity(trade);
 		if(status==0) {
 			throw new DatabaseException("Failed to insert activity!!!");
