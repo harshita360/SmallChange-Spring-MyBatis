@@ -60,17 +60,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-
-		http.csrf().disable().anonymous().and().authorizeRequests().antMatchers(HttpMethod.POST, "/clients/login")
-				.permitAll()
-
-				.antMatchers("/portfolios**").hasAnyRole("CLIENT")
-
-				.antMatchers("/actuator/**").hasAnyRole("ADMIN")
-
-				.anyRequest().authenticated().and()
-				.addFilter(new AuthorizationFilter(authenticationManager(), environment, jwtUtil));
-		//http.addFilterBefore(new AuthorizationFilter(authenticationManager(),  UsernamePasswordAuthenticationFilter.class);
+		
+		http
+		.csrf().disable()
+		.anonymous()
+		.and()
+		.authorizeRequests()
+		.antMatchers(HttpMethod.POST, "/clients/login").permitAll()
+		
+		.antMatchers( "/portfolios**").hasAnyRole("CLIENT")
+		.antMatchers("/activity**").hasAnyRole("CLIENT")
+			
+		.antMatchers("/actuator/**").hasAnyRole("ADMIN")
+		
+		.anyRequest().authenticated()
+		.and()
+		.addFilter(new AuthorizationFilter(authenticationManager(),environment,jwtUtil));
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.headers().frameOptions().disable();
 

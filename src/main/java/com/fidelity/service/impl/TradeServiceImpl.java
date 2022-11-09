@@ -54,6 +54,7 @@ public class TradeServiceImpl extends TradeService{
 	
 	
 	@Autowired
+	@Qualifier("proxyActivityService")
 	private ActivityService activityService;
 	
 

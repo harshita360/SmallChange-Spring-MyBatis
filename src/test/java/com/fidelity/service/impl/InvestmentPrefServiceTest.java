@@ -20,13 +20,13 @@ public class InvestmentPrefServiceTest {
 	    @Autowired
 	    private JdbcTemplate jdbcTemplate;
 	    
-	    @Test
-	    void testQueryForAllPreferences() throws Exception {
-	        
-	        InvestmentPreference responseStatus = service.getInvestmentPref(null);
-	        
-	     
-	    }
+//	    @Test
+//	    void testQueryForAllPreferences() throws Exception {
+//	        
+//	        InvestmentPreference responseStatus = service.getInvestmentPref(null);
+//	        
+//	     
+//	    }
 	    
 	
 }
