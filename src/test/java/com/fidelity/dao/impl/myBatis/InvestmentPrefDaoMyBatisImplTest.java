@@ -46,7 +46,7 @@ public class InvestmentPrefDaoMyBatisImplTest {
 	@BeforeEach
 	public void setUp() {
         jdbcTemplate=new JdbcTemplate(dataSource);
-		clientId=BigInteger.valueOf(346346435);
+		clientId=BigInteger.valueOf(970531476);
 	}
 	
 	@Test

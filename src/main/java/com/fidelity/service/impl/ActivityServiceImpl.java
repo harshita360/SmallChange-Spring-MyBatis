@@ -46,8 +46,6 @@ public class ActivityServiceImpl implements ActivityService {
 		if(clientDao.getUserById(order.getClientId())==null) {
 			throw new NotFoundException(clientErrorMsg(order.getClientId().toString()));
 		}
-		
-		System.out.println(order.getOrderId());
         activityDao.addOrder(order);
 		return order;
 		

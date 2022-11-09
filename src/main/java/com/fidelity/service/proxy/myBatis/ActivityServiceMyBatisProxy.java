@@ -35,8 +35,8 @@ public class ActivityServiceMyBatisProxy implements ActivityService{
 
 	@Override
 	@Transactional
-	public void addOrder(Order order) {
-		service.addOrder(order);
+	public Order addOrder(Order order) {
+		return service.addOrder(order);
 		
 	}
 

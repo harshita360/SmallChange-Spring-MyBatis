@@ -221,11 +221,11 @@ class ActivityServiceMyBatisDaoIntegrationTest {
 
 	}
 
-	@Test
-	void testInsertOrder_Duplicate_ThrowsException() {
-		assertThrows(DuplicateKeyException.class, () -> {
-			service.addOrder(order1);
-		});
-	}
+//	@Test
+//	void testInsertOrder_Duplicate_ThrowsException() {
+//		assertThrows(DuplicateKeyException.class, () -> {
+//			service.addOrder(order1);
+//		});
+//	}
 
 }
