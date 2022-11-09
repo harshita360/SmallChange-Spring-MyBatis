@@ -52,6 +52,7 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
 		String authorizationHeader = request.getHeader(environment.getProperty("authorization.headerName"));
 		if (authorizationHeader == null) {
 			chain.doFilter(request, response);
+			//SecurityContextHolder.getContext().setAuthentication(null);
 			return;
 		}
 		try {
@@ -72,6 +73,9 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
 			
 			UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(fmtsToken, userId,
 					authorities);
+			
+			//authRequest.setAuthenticated(true);
+			
 			SecurityContextHolder.getContext().setAuthentication(authRequest);
 			
 			chain.doFilter(request, response);

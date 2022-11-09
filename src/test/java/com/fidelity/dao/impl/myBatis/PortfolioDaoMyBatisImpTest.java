@@ -38,7 +38,6 @@ import com.fidelity.models.PortfolioHoldings;
 @SpringBootTest
 @Sql(scripts={"classpath:schema.sql", "classpath:data.sql"},executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)  
 @Sql(scripts={"classpath:drop.sql",},executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)  
-
 @Transactional
 public class PortfolioDaoMyBatisImpTest {
 	
@@ -67,8 +66,8 @@ public class PortfolioDaoMyBatisImpTest {
 	public void setUp() {
 		
 		jdbcTemplate=new JdbcTemplate(dataSource);
-		
-		clientId=BigInteger.valueOf(346346435);
+
+		clientId=BigInteger.valueOf(970531476);
 		
 		List<PortfolioHoldings> holdings1=new ArrayList<>();
 		hold1=new PortfolioHoldings("Q345", BigInteger.valueOf(10),BigDecimal.valueOf(876.97),LocalDateTime.of(1999, 9, 29, 23, 59, 59),LocalDateTime.of(1999, 9, 29, 23, 59, 59));

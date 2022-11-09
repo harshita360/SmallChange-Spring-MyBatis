@@ -140,7 +140,7 @@ public class Portfolio {
 			// doing if its buy an instrument	
 			}else if(trade.getDirection().equals("B")) {
 				// checking if the user has balance
-				//System.out.println("Goiung to updated");
+				//System.out.println("Going to updated");
 				this.updateBuyInstrumentData(trade,hold);
 				
 			}
