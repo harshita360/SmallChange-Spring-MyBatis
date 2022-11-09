@@ -77,7 +77,7 @@ public class PortfolioServiceMyBatisDaoIntegrationTest {
 
 		jdbcTemplate = new JdbcTemplate(dataSource);
 
-		clientId = BigInteger.valueOf(346346435);
+		clientId = BigInteger.valueOf(970531476);
 
 		List<PortfolioHoldings> holdings1 = new ArrayList<>();
 		hold1 = new PortfolioHoldings("Q345", BigInteger.valueOf(10), BigDecimal.valueOf(876.97),
