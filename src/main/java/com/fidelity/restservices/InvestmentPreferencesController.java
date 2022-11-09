@@ -1,5 +1,8 @@
 package com.fidelity.restservices;
 
+import java.math.BigInteger;
+
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.fidelity.dao.InvestmentPreferenceDao;
 import com.fidelity.models.InvestmentPreference;
+import com.fidelity.security.JwtTokenService;
 import com.fidelity.service.ClientService;
 import com.fidelity.service.InvestmentPreferenceService;
 
@@ -24,6 +28,12 @@ public class InvestmentPreferencesController {
 	
 	@Autowired
 	private InvestmentPreferenceService service;
+	
+	@Autowired
+	private Logger logger;
+	
+	@Autowired
+	private JwtTokenService tokenService;
 	
 
 	@GetMapping("")
@@ -45,8 +55,14 @@ public class InvestmentPreferencesController {
 	}
 	
 	@PostMapping("/updatepref")
-	public ResponseEntity<InvestmentPreference> updateInvestmentPreference(@RequestBody InvestmentPreference i)
+	public ResponseEntity<InvestmentPreference> updateInvestmentPreference(
+			@RequestBody InvestmentPreference i,@RequestHeader("Authorization")String token)
 	{
+		token=token.substring(6);
+		BigInteger clientId=new BigInteger(tokenService.extractClientId(token));
+		i.setClientId(clientId);
+		
+		System.out.println(i);
 	   try
 	   {
 		   InvestmentPreference ip=service.updateInvestmentPref(i);
@@ -58,6 +74,7 @@ public class InvestmentPreferencesController {
 	   }
 	   catch(Exception e)
 	   {
+		   e.printStackTrace();
 		  throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"backend err",e); 
 	   }
 	}
@@ -76,6 +93,8 @@ public class InvestmentPreferencesController {
 	   }
 	   catch(Exception e)
 	   {
+		  logger.error("Error in setting investment prference {}",e);
+		  System.out.println(e.getMessage());
 		  throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"backend err",e); 
 	   }
 	}

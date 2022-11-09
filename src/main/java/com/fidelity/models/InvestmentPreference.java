@@ -25,6 +25,9 @@ public class InvestmentPreference {
 	public InvestmentPreference() {
 		super();
 	}
+	public void setClientId(BigInteger clientId) {
+		this.clientId = clientId;
+	}
 	public BigInteger getClientId() {
 		return clientId;
 	}

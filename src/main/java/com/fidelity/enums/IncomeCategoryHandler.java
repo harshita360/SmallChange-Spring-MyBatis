@@ -14,6 +14,7 @@ public class IncomeCategoryHandler implements TypeHandler<IncomeCategory>{
 	public void setParameter(PreparedStatement ps, int i, IncomeCategory parameter, JdbcType jdbcType)
 			throws SQLException {
 		// TODO Auto-generated method stub
+		System.out.println(parameter);
 		ps.setString(i, parameter.getCode());
 		
 	}

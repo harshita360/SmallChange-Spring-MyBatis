@@ -24,14 +24,14 @@
 	
 	<insert id="addNewInvestmentPreference" parameterType="InvestmentPreference">
     INSERT INTO investment_preference
-			(	client_id,
+			(	client_id ,
 				income_category,
 				length_of_investment,
 				investment_purpose,
 				risk_tolerance)
 			VALUES
 			(	
-				#{clientId},
+				#{clientId ,jdbcType=BIGINT},
 				#{incomeCategory, typeHandler=com.fidelity.enums.IncomeCategoryHandler},
 				#{lengthOfInvestment, typeHandler=com.fidelity.enums.LengthOfInvestmentHandler},
 				#{investmentPurpose},

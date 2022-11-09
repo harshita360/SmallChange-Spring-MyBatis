@@ -23,11 +23,15 @@ public class InvestmentPreferenceServiceImpl extends InvestmentPreferenceService
 
 	@Override
 	public InvestmentPreference updateInvestmentPref(InvestmentPreference i) throws Exception {
-		// TODO Auto-generated method stub
 		InvestmentPreference ip=null;
 		try
 		{
-			ip=ifdao.updatePref(i);
+			InvestmentPreference temp=ifdao.getExistingPref(i.getClientId());
+			if(temp==null) {
+				ip=ifdao.addNewInvestmentPreference(i);
+			}else {
+				ip=ifdao.updatePref(i);
+			}
 		}
 		catch(Exception e)
 		{
