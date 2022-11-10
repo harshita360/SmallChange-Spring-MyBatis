@@ -64,6 +64,7 @@ class ActivityServiceMyBatisDaoIntegrationTest {
 
 	@Test
 	void getUserActivitySuccess() {
+		trade1.setOrder(null);
 		List<Trade> trades = service.getUserActivity(clientId);
 		assertEquals(trades.size(), countRowsInTableWhere(jdbcTemplate, "trade_history", "client_id=" + clientId));
 		assertTrue(trades.contains(trade1));
@@ -79,6 +80,7 @@ class ActivityServiceMyBatisDaoIntegrationTest {
 
 	@Test
 	void getPortfolioActivitySuccess() {
+		trade1.setOrder(null);
 		List<Trade> trades = service.getPortfolioActivity(portfolioId);
 		assertEquals(trades.size(),
 				countRowsInTableWhere(jdbcTemplate, "trade_history", "portfolio_id='" + portfolioId + "'"));

@@ -14,7 +14,7 @@
 		<result property="quantity" column="quantity" />
 		<result property="executionPrice" column="execution_price" />
 		<result property="cashValue" column="cash_value" />
-		<!--  <collection property="order" resultMap="orderMap" /> -->
+		<association property="order" resultMap="orderMap" />
 	</resultMap>
 	
 	<resultMap id="orderMap" type="Order">
@@ -33,9 +33,8 @@
 		SELECT trade.trade_id,trade.order_id,trade.instrument_id,trade.direction,
 				trade.quantity,trade.execution_price,trade.client_id,trade.portfolio_id,trade.cash_value,
 				trade.transaction_at,ord.target_price
-				from trade_history trade LEFT OUTER JOIN order_data ord on trade.order_id=ord.order_id 
+				from trade_history trade LEFT JOIN order_data ord on trade.client_id=ord.client_id 
 				WHERE trade.client_id=#{clientId}
-				ORDER BY trade.transaction_at DESC
 	</select>
 	
 	<select id="getPortfolioActivity" resultMap="activityMap">

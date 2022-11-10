@@ -8,6 +8,49 @@
      	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
      	http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
      	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:db.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Define a DataSource for the Oracle database -->
+	<bean id="datasource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource" primary="true">
+		<property name="url" value="${db.url}" />
+		<property name="driverClassName" value="${db.driver}" />
+		<property name="username" value="${db.username}" />
+		<property name="password" value="${db.password}" />
+	</bean>
+	
 
+	<!-- Define a transaction manager
+		 Use DataSourceTransactionManager for transactions on a single database -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="datasource" />
+	</bean>
+
+	<!-- Enable component scanning and autowire for the integration and configuration packages
+		 (beware that this does not enable mapper scanning!) -->
+	<context:component-scan base-package="com.fidelity.mappers,  com.fidelity.dao.impl.myBatis, com.fidelity.service.impl, com.fidelity.service.proxy.myBatis, com.fidelity.restservices" />
+	<!-- , com.fidelity.service.impl ,com.fidelity.service.proxy.myBatis -->
+	<!-- Enable transaction demarcation with annotations -->
+	<tx:annotation-driven />
+
+	<!-- Define the SqlSessionFactory for MyBatis -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="datasource" />
+		<property name="typeAliasesPackage" value="com.fidelity.models, com.fidelity.enums" />
+		<property name="mapperLocations" value="classpath*:com/fidelity/mappers/*.xml" />
+	</bean>
+
+	<!-- Scan for mappers and let them be autowired -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.fidelity.mappers" />
+	</bean>
 	
 </beans>

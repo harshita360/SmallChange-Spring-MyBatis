@@ -50,6 +50,7 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
 		}
 		//System.out.println(request.getRequestURI() + ":" + request.getRequestURI().toString().endsWith("login"));
 		String authorizationHeader = request.getHeader(environment.getProperty("authorization.headerName"));
+		//System.out.println("Header ="+authorizationHeader);
 		if (authorizationHeader == null) {
 			chain.doFilter(request, response);
 			//SecurityContextHolder.getContext().setAuthentication(null);

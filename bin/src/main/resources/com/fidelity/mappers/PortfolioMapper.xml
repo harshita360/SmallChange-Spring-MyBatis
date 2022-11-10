@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fidelity.mappers.PortfolioMapper">
+
+
+
+	<resultMap id="portfolioMap" type="Portfolio" >
+		<id property="portfolioId" column="portfolio_id" />
+		<result property="balance" column="balance" />
+		<result property="clientId" column="client_id" />
+		<result property="portfolioName" column="name" />
+		<result property="portfolioTypeName" column="p_category" />
+		<collection property="holdings" resultMap="portfolioHoldingsMap" />
+	</resultMap>
+	
+	<resultMap id="portfolioHoldingsMap" type="PortfolioHoldings">
+		<result property="insrumentId" column="instrument_id" />
+		<result property="quantity" column="quantity" />
+		<result property="invetsmentprice" column="investment_price" />
+		<result property="lastUpdateAt" column="last_update_at" />
+		<result property="addedAt" column="added_at" />
+	</resultMap>
+	
+	<select useCache="false" flushCache="true" id="getPortfolioFromPortfolioId" resultMap="portfolioMap">
+	
+		SELECT
+			p.portfolio_id,
+			p.name,
+			p.p_category,
+			p.balance,
+			p.client_id,
+			ph.instrument_id,
+			ph.investment_price,
+			ph.quantity ,
+			ph.added_at ,
+			ph.last_update_at
+		FROM PORTFOLIO P 
+		LEFT OUTER JOIN portfolio_holding PH ON p.portfolio_id=ph.portfolio_id
+		WHERE p.portfolio_id= #{value}
+	</select>
+	
+	<select useCache="false" flushCache="true" id="getPortfolioFromPortfolioIdOfInstrument" parameterType="java.util.Map" resultMap="portfolioMap">
+	
+		SELECT
+			p.portfolio_id,
+			p.name,
+			p.p_category,
+			p.balance,
+			p.client_id,
+			ph.instrument_id,
+			ph.investment_price,
+			ph.quantity ,
+			ph.added_at ,
+			ph.last_update_at
+		FROM PORTFOLIO P 
+		LEFT OUTER JOIN portfolio_holding PH ON p.portfolio_id=ph.portfolio_id AND  ph.instrument_id= #{instrumentId}
+		WHERE p.portfolio_id= #{portfolioId}
+	</select>
+	
+	<select useCache="false" flushCache="true" id="getPortfoliosOfClient" resultMap="portfolioMap">
+	
+		SELECT
+			p.portfolio_id,
+			p.name,
+			p.p_category,
+			p.balance,
+			p.client_id,
+			ph.instrument_id,
+			ph.investment_price,
+			ph.quantity ,
+			ph.added_at ,
+			ph.last_update_at
+		FROM PORTFOLIO P 
+		LEFT OUTER JOIN portfolio_holding PH ON p.portfolio_id=ph.portfolio_id
+		WHERE p.client_id= #{clientId}
+	</select>
+	
+	<insert id="addNewPortfolio" parameterType="Portfolio">
+		INSERT INTO PORTFOLIO
+			(	PORTFOLIO_ID,
+				CLIENT_ID,
+				BALANCE,
+				NAME,
+				P_CATEGORY)
+			VALUES
+			(	
+				#{portfolioId},
+				#{clientId},
+				#{balance},
+				#{portfolioName},
+				#{portfolioTypeName}
+			)
+	</insert>
+	
+	<update id="updatePortfolio" parameterType="Portfolio" >
+		UPDATE PORTFOLIO SET
+				    NAME= #{portfolioName},
+				    BALANCE= #{balance},
+				    P_CATEGORY= #{portfolioTypeName}
+		WHERE PORTFOLIO_ID= #{portfolioId}
+	</update>
+	
+	<update id="updatePortfolioHolding" parameterType="java.util.Map">
+		UPDATE portfolio_holding SET 
+			QUANTITY= #{holding.quantity}, 
+			INVESTMENT_PRICE= #{holding.invetsmentprice}, 
+			LAST_UPDATE_AT= #{holding.lastUpdateAt} 
+			WHERE PORTFOLIO_ID= #{portfolioId} and INSTRUMENT_ID= #{holding.insrumentId}
+	</update>
+	
+	<insert id="addPortfolioHolding" parameterType="java.util.Map" >
+		INSERT INTO PORTFOLIO_HOLDING
+			(	PORTFOLIO_ID,
+				INSTRUMENT_ID,
+				QUANTITY,
+				INVESTMENT_PRICE,
+				ADDED_AT,
+			 	LAST_UPDATE_AT)
+			VALUES
+			(	#{portfolioId},
+				#{holding.insrumentId},
+				#{holding.quantity},
+				#{holding.invetsmentprice},
+				#{holding.addedAt},
+				#{holding.lastUpdateAt}
+			)
+	
+	</insert>
+	
+	<delete id="deletePortfolioHolding" parameterType="java.util.Map" >
+		DELETE FROM portfolio_holding 
+		where PORTFOLIO_ID= #{portfolioId} and INSTRUMENT_ID= #{instrumentId}
+	</delete>
+	
+	<delete id="deletePortfolioByPortfolioId" parameterType="String" >
+		DELETE FROM portfolio
+		where PORTFOLIO_ID= #{portfolioId}
+	</delete>
+	
+	<delete id="deletePortfoliosOfClient" parameterType="java.math.BigInteger" >
+		DELETE FROM portfolio
+		where client_id= #{clientId}
+	</delete>
+	
+</mapper>

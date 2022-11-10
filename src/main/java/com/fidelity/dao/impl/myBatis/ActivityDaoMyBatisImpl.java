@@ -44,7 +44,10 @@ public class ActivityDaoMyBatisImpl extends ActivityDao {
 	@Override
 	@Transactional
 	public List<Trade> getUserActivity(BigInteger userId) {
-		return mapper.getUserActivity(userId);
+		List<Trade> data=mapper.getUserActivity(userId);
+		
+	System.out.println(data.size());
+	return data;
 	}
 
 	@Override

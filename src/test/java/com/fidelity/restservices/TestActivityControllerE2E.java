@@ -93,6 +93,9 @@ class TestActivityControllerE2E {
 		assertEquals(HttpStatus.OK,response.getStatusCode());
 		
 		Trade[] retrived=response.getBody();
+		for(Trade t:activity) {
+			t.setOrder(null);
+		}
 		assertArrayEquals(activity.toArray(), retrived);
 	}
 	
@@ -165,6 +168,9 @@ class TestActivityControllerE2E {
 		assertEquals(HttpStatus.OK,response.getStatusCode());
 		
 		Trade[] retrived=response.getBody();
+		for(Trade t:activity) {
+			t.setOrder(null);
+		}
 		assertArrayEquals(activity.toArray(), retrived);
 	}
 	

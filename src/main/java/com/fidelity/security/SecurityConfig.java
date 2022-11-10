@@ -66,9 +66,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.anonymous()
 		.and()
 		.authorizeRequests()
-		.antMatchers(HttpMethod.POST, "/clients/login").permitAll()
+		.antMatchers(HttpMethod.POST, "/clients/login","/clients/register").permitAll()
 		
-		.antMatchers( "/portfolios**").hasAnyRole("CLIENT")
+		.antMatchers( "/portfolios**","/portfolios/client/default").hasAnyRole("CLIENT")
 		.antMatchers("/activity**").hasAnyRole("CLIENT")
 			
 		.antMatchers("/actuator/**").hasAnyRole("ADMIN")

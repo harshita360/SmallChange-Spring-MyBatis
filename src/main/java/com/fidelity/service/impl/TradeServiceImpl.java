@@ -140,7 +140,7 @@ public class TradeServiceImpl extends TradeService{
 			
 			return t;
 		}else {
-			throw new RuntimeException("Invalid authentication data");
+			throw new RuntimeException("Invalid authentication data or price change");
 		}
 		
 //		Trade trade=new Trade(UUID.randomUUID().toString(),orderdto.getOrder().getDirection(),orderdto.getOrder(),orderdto.getOrder().getClientId(),
@@ -186,7 +186,7 @@ public class TradeServiceImpl extends TradeService{
 			}	
 			return t;
 		}else {
-			throw new RuntimeException("Invalid authentication data");
+			throw new RuntimeException("Invalid authentication data or price change");
 		}
 		
 	}

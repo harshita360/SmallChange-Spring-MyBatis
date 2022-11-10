@@ -70,7 +70,7 @@ public class PortfolioController {
 	@PostMapping("/client/default")
 	public ResponseEntity<Portfolio> createClientDefaultPortfolio(
 			@RequestHeader("Authorization") String token){
-		
+		logger.debug("In default create portfolio of client");
 		token=token.substring(6);
 		BigInteger clientId=new BigInteger(tokenService.extractClientId(token));
 		

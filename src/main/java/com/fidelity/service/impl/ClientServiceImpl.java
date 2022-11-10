@@ -18,6 +18,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fidelity.dao.ClientDao;
 import com.fidelity.exceptions.FmtsException;
+import com.fidelity.exceptions.ClientException;
 import com.fidelity.models.Client;
 import com.fidelity.security.JwtTokenService;
 import com.fidelity.service.ClientService;
@@ -46,8 +47,15 @@ public class ClientServiceImpl extends ClientService{
 	@Override
 	public Client registerNewUser(Client client) {
 		// TODO Auto-generated method stub
-		
-		return null;
+//		logger.debug("Register New User/ Insert");
+		if(this.getUserByEmail(client.getEmail())!=null) {
+			throw new ClientException("Already user exist with this email");
+		}
+		//return dao.registerNewUser(client);
+		FmtsClientModel respData = this.registerWithFmtsServer(client);	
+		client.setClientId(respData.getClientId());
+		dao.registerNewUser(client);
+		return client;
 	}
 
 	@Override
@@ -70,45 +78,30 @@ public class ClientServiceImpl extends ClientService{
 	}
 
 	@Override
-	public Client getLoggedInUser() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean isUserLoggedIn() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void logoutUser() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void removeUserById(BigInteger clientId) {
 		// TODO Auto-generated method stub
-		
+		logger.debug("Remove User By Id");
+		dao.removeUserById(clientId);
 	}
 
 	@Override
 	public Client getUserById(BigInteger clientId) {
 		// TODO Auto-generated method stub
-		return null;
+		logger.debug("Get User By Id");
+		return dao .getUserById(clientId);
 	}
 
 	@Override
 	public Client getUserByEmail(String email) {
 		// TODO Auto-generated method stub
-		return null;
+		logger.debug("Get User By Email");
+		return dao.getUserByEmail(email);
 	}
 	
 	private FmtsClientModel registerWithFmtsServer(Client client) {
 		
 		HttpHeaders headers=new HttpHeaders();
-		headers.add("Cotent-Type", "application/json");
+		headers.add("Content-Type", "application/json");
 		headers.add("Accept", "application/json");
 		
 		FmtsClientModel requestData=new FmtsClientModel();

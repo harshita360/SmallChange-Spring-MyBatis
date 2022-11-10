@@ -15,6 +15,8 @@ import com.fidelity.models.Order;
 import com.fidelity.models.Trade;
 import com.fidelity.service.TradeService;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/trade")
@@ -23,6 +25,7 @@ public class TradeController {
 	@Autowired
 	private TradeService service;
     
+	@CircuitBreaker(name = "fmts-circuit-breaker")
 	@PostMapping("")
 	public ResponseEntity<Trade> executeTrade(@RequestBody Order order,@RequestHeader("Authorization")String token)
 	{
